@@ -1,7 +1,7 @@
 
 function readLines(){
   window.vehicle_data_view.clearAll();
-/*	for (var i in vehicle_data){
+/*	for (var i in vehicle_data){xxxx
 		carReader.readLine(vehicle_data[i]);
 	}
 */	
