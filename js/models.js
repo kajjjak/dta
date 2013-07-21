@@ -116,6 +116,10 @@ $(function(){
     
     clearAll: function() {
     	while(vehicle_readings.length){ vehicle_readings.pop();}
+    },
+    
+    removeAll: function() {
+    	PouchDB.destroy('vehicle_readings-backbone-0.0.12', function(){ console.info("Cleared database"); });
     }
 
   });
