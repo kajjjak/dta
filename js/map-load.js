@@ -32,10 +32,10 @@ function addDriversPath(m){
 
 function runDriversPathSimulation(){
 	carReader.onDataRead = function(d){
+		drawGauge(100*(d.vehicle_speed/200),100*(d.engine_speed/200),d.fuel_level );
 		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
 		$("#engine_speed").html("engine_speed: " + d.engine_speed);
 		$("#torque_at_transmission").html("torque_at_transmission: " + d.torque_at_transmission);
-		$("#engine_speed").html("engine_speed: " + d.engine_speed);
 		$("#parking_brake_status").html("parking_brake_status: " + d.parking_brake_status);
 		$("#transmission_gear_position").html("transmission_gear_position: " + d.transmission_gear_position);
 		$("#odometer").html("odometer: " + d.odometer);
