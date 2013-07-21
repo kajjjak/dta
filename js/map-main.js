@@ -17,13 +17,26 @@ function Map(){
 		return this.map;
 	};
 
-	this.addLine = function(latlngs, layer_name, options){
+	this.drawLine = function(latlngs, layer_name, options){
 		latlng_array = [];
 		for (var i = 0; i < latlngs.length; i++){
 			latlng_array.push(new L.LatLng(latlngs[i][0], latlngs[i][1]));
 		}
 		this.addLineByLatLng(latlng_array, layer_name, options);
 	};
+	
+
+	this.appendLineToPosition = function(latlng, layer_name, options){
+		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);}
+		if(!this.layers[layer_name]._latlngs){this.layers[layer_name]._latlngs = [latlng]; return;}
+		var l = this.layers[layer_name]._latlngs.length;
+		var pold = this.layers[layer_name]._latlngs[l - 1];
+		var pnew = latlng;
+		var a = new L.LatLng(pold[0], pold[1]);
+		var b = new L.LatLng(pnew[0], pnew[1]);
+		this.addLineByLatLng([a,b], layer_name, options);
+		this.layers[layer_name]._latlngs.push(latlng);
+	};	
 
 	this.addLineByLatLng = function(latlngs, layer_name, options){
 		options = options || {};
@@ -35,5 +48,7 @@ function Map(){
 		var pl = L.polyline(latlngs, options)
 		pl.addTo(this.layers[layer_name]);
 	};
+	
+	
 }
 var map = new Map();
