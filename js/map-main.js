@@ -26,7 +26,8 @@ function Map(){
 	};
 	
 
-	this.appendLineToPosition = function(latlng, layer_name, options){
+	this.appendLineToPosition = function(latitude, longitude, layer_name, options){
+		var latlng = [latitude, longitude];
 		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);}
 		if(!this.layers[layer_name]._latlngs){this.layers[layer_name]._latlngs = [latlng]; return;}
 		var l = this.layers[layer_name]._latlngs.length;
