@@ -31,6 +31,24 @@ function addDriversPath(m){
 }
 
 function runDriversPathSimulation(){
+	carReader.onDataRead = function(d){
+		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
+		$("#engine_speed").html("engine_speed: " + d.engine_speed);
+		$("#torque_at_transmission").html("torque_at_transmission: " + d.torque_at_transmission);
+		$("#engine_speed").html("engine_speed: " + d.engine_speed);
+		$("#parking_brake_status").html("parking_brake_status: " + d.parking_brake_status);
+		$("#transmission_gear_position").html("transmission_gear_position: " + d.transmission_gear_position);
+		$("#odometer").html("odometer: " + d.odometer);
+		$("#ignition_status").html("ignition_status: " + d.ignition_status);
+		$("#fuel_consumed_since_restart").html("fuel_consumed_since_restart: " + d.fuel_consumed_since_restart);
+		$("#fuel_level").html("fuel_level: " + d.fuel_level);
+		$("#headlamp_status").html("headlamp_status: " + d.headlamp_status);
+		$("#high_beam_status").html("high_beam_status: " + d.high_beam_status);
+		$("#brake_pedal_status").html("brake_pedal_status: " + d.brake_pedal_status);
+		$("#fine_odometer_since_restart").html("fine_odometer_since_restart: " + d.fine_odometer_since_restart);
+		$("#accelerator_pedal_position").html("accelerator_pedal_position: " + d.accelerator_pedal_position);
+	};
+	
 	vehicle_index = 0;
 	setInterval(function(){
 		if (vehicle_data.length > vehicle_index){
