@@ -33,12 +33,13 @@ function addDriversPath(m){
 function runDriversPathSimulation(){
 	vehicle_index = 0;
 	setInterval(function(){
-		var d = vehicle_data[vehicle_index];
-		var m = carReader.readLine(d);
-		vehicle_index = vehicle_index + 1;
-		console.info("out");
-		if (m){
-			addDriversPath();
+		if (vehicle_data.length > vehicle_index){
+			var d = vehicle_data[vehicle_index];
+			var m = carReader.readLine(d);
+			vehicle_index = vehicle_index + 1;
+			if (m){
+				addDriversPath(m);
+			}
 		}
 	}, 10);
 }
