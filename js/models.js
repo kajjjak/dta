@@ -115,9 +115,7 @@ $(function(){
     },
     
     clearAll: function() {
-    	while(vehicle_readings.length){
-    		vehicle_readings.pop();
-    	}
+    	while(vehicle_readings.length){ vehicle_readings.pop();}
     }
 
   });
