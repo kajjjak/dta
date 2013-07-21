@@ -15,8 +15,9 @@ function OpenXCReader(){
 		if (this.hasReadLineFlush(line.name)){
 			m = this.flush();
 		}
+		this.cached[line.name] = line.value;
 		this.buffer[line.name] = buff;
-		if(this.onDataRead){this.onDataRead(this.buffer);}
+		if(this.onDataRead){this.onDataRead(this.cached);}
 		return m; 
 	};
 	
