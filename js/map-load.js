@@ -1,10 +1,9 @@
 
 function readLines(){
-  window.vehicle_data_view.clearAll();
-/*	for (var i in vehicle_data){xxxx
+  //window.vehicle_data_view.clearAll();
+	for (var i in vehicle_data){
 		carReader.readLine(vehicle_data[i]);
 	}
-*/	
 }
 
 setTimeout(function(){ readLines();}, 1000);
