@@ -1,12 +1,22 @@
 
 function readLines(){
-  //window.vehicle_data_view.clearAll();
+  window.vehicle_data_view.clearAll();
 	for (var i in vehicle_data){
 		carReader.readLine(vehicle_data[i]);
 	}
 }
 
-setTimeout(function(){ readLines();}, 1000);
+function showDriversPath(){
+	vehicle_readings.forEach(function(m){
+		var speed = m.attributes.vehicle_speed[0];
+		var lat = m.attributes.latitude[0];
+		var lng = m.attributes.longitude[0];
+		console.info("m " + m.attributes.vehicle_speed[0]);
+	});
+	
+}
+
+setTimeout(function(){ showDriversPath();}, 1000);
 
 vehicle_data = [
 	{"timestamp": 1351181576.6507802, "name": "brake_pedal_status", "value": true},
