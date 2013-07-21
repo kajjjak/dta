@@ -12,6 +12,7 @@ function showDriversPath(){
 		var lat = m.attributes.latitude[0];
 		var lng = m.attributes.longitude[0];
 		console.info("m " + m.attributes.vehicle_speed[0]);
+		map.appendLineToPosition(lat, lng, "myredline", {"color":"blue"});
 	});
 	
 }
