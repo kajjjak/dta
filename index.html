@@ -8,7 +8,7 @@
 	<!--[if lte IE 8]>
 	   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
 	<![endif]-->
-	
+
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
 	
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -35,7 +35,34 @@
     body {
       padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
     }
-  </style>	
+  </style>
+	
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	<script type='text/javascript'>
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawChartCall);
+
+      vehicle_gauge_options = {
+        width: 400, height: 120,
+        redFrom: 90, redTo: 100,
+        yellowFrom:75, yellowTo: 90,
+        minorTicks: 5
+      };
+      
+      function drawGauge(speed, rpm, fuel){
+      	drawChartCall(undefined, speed, rpm, fuel);
+      }
+
+      function drawChartCall(a, speed, rpm, fuel) {
+      	var speed = speed || 0;
+      	var rpm = rpm || 0;
+      	var fuel = fuel || 0;
+        var vehicle_gauge_data = google.visualization.arrayToDataTable([['Label', 'Value'],['Speed', speed],['RPM', rpm],['Fuel', fuel]]);
+        window.chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+        chart.draw(vehicle_gauge_data, vehicle_gauge_options);
+      }
+      
+    </script>	  
 	</head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -65,8 +92,9 @@
 			  </div>
 			  <div class="span2">
 			  	<div class="vehicle_data">
+			  		<div id='chart_div'></div>
 						<div id="vehicle_speed"></div>
-						<div id="engine_speed"></div>
+						<!-- div id="engine_speed"></div>
 						<div id="torque_at_transmission"></div>
 						<div id="engine_speed"></div>
 						<div id="parking_brake_status"></div>
@@ -79,7 +107,7 @@
 						<div id="high_beam_status"></div>
 						<div id="brake_pedal_status"></div>
 						<div id="fine_odometer_since_restart"></div>
-						<div id="accelerator_pedal_position"></div>
+						<div id="accelerator_pedal_position"></div -->
 			  	</div>
 			  	<ul>
 			  		<li>calculates saving</li>
