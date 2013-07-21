@@ -5,10 +5,13 @@ function OpenXCReader(){
 		//expects json data having format
 		// {"timestamp": 1351181576.64078, "name": "engine_speed", "value": 714.0}
 		// where name can have different properties
-		this.buffer[line.name] = line.value;
+		var buff = this.buffer[line.name];
+		if(!buff){ buff = []; }
+		if(buff[buff.length - 1] != line.value){buff.push(line.value);}
 		if (this.hasReadLineFlush(line.name)){
 			this.flush();
 		}
+		this.buffer[line.name] = buff;
 	};
 	
 	this.hasReadLineFlush = function(attr){
