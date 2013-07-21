@@ -6,13 +6,23 @@ function readLines(){
 	}
 }
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 function showDriversPath(){
 	vehicle_readings.forEach(function(m){
 		var speed = m.attributes.vehicle_speed[0];
 		var lat = m.attributes.latitude[0];
 		var lng = m.attributes.longitude[0];
-		console.info("m " + m.attributes.vehicle_speed[0]);
-		map.appendLineToPosition(lat, lng, "myredline", {"color":"blue"});
+		var opacity = speed/80;
+		console.info("color " + 255*(speed/100));
+		map.appendLineToPosition(lat, lng, "myredline", {"color": "blue", "opacity": opacity});
 	});
 	
 }
