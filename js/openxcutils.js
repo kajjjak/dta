@@ -1,6 +1,9 @@
 function OpenXCReader(){
 	/* collects the data and flushes */
+	
 	this.buffer = {}
+	this.cached = {}
+	
 	this.readLine = function(line){
 		//expects json data having format
 		// {"timestamp": 1351181576.64078, "name": "engine_speed", "value": 714.0}
@@ -13,6 +16,7 @@ function OpenXCReader(){
 			m = this.flush();
 		}
 		this.buffer[line.name] = buff;
+		if(this.onDataRead){this.onDataRead(this.buffer);}
 		return m; 
 	};
 	
