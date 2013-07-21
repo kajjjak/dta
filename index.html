@@ -4,14 +4,14 @@
 	<title>Drivers Teaching App</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
 	<!--[if lte IE 8]>
 	   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
 	<![endif]-->	
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
-</head>
-<body>
-	<div id="map" style="width: 600px; height: 400px"></div>
+	
+	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	
 	<script src="/vendor/jquery-2.0.0.min.js"></script>
 	<script src="/vendor/pouchdb.min.js"></script>
@@ -22,8 +22,11 @@
 	<script src="/js/models.js"></script>
 	<script src="/js/map-main.js"></script>
 	<script src="/js/map-load.js"></script>
-	<script src="/js/openxcutils.js"></script>
-
+	<script src="/js/openxcutils.js"></script>	
+	
+</head>
+<body>
+	<div id="map" style="width: 600px; height: 400px"></div>
 	<script>
 		map.createMap("map", [42.291595, -83.237617], 16, 18);
 	</script>
