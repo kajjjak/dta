@@ -91,8 +91,11 @@ function runDriversPathSimulation(vehicle_data_collection){
 			vehicle_simulation_index = vehicle_simulation_index + 1;
 			if (m){
 				var p = addDriversPath(m);
-				map.getNearbyMarkers(p, "route", 1, function(m){
-					console.info("Detected it " + m._bbm.id);
+				map.getNearbyMarkers(p, "route", 1, function(rule){
+					var r = rule._bbm;
+					var vehicle_speed = m.get("vehicle_speed")[0];
+					var rule_speed = r.get("speed_limit");
+					console.info("Detected rule " + vehicle_speed + "  " + rule_speed);
 				});
 			}
 		}
