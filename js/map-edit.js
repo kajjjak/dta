@@ -46,9 +46,11 @@ function showRoute(){
 
 function addRule(latitude, longitude, bbm){
 	map.appendLineToPosition(latitude, longitude, "route", {"color": "darkblue", "opacity": 0.35});
+	var _bbm = bbm;
 	var marker = map.addMarker(latitude, longitude, "route", function(mrkr){
-		marker._bbm = bbm;
-		selectRule(marker._bbm);
+		selectRule(_bbm);
 	});
+	marker._bbm = bbm;
+	selectRule(_bbm);
 }
 
