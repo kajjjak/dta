@@ -75,7 +75,7 @@
 					      <input id="drive_rule_stop" type="checkbox"> Full stop
 					    </label>
 					    <input id="drive_rule_comment" type="text" placeholder="Comment to display at point">
-					    <button class="btn" onClick="saveRule()">Save</button>
+					    <button class="btn" type="button" onClick="saveRule()">Save</button>
 					  </fieldset>
 					</form>		  		
 				</div>
@@ -88,12 +88,36 @@
 		map.clickMap(function(latlng){
 			route_rule_selected = vehicle_readings.create({"route": true, "latitude":latlng.lat, "longitude": latlng.lng});
 			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.35});
-			mrkr = map.addMarker(latlng.lat, latlng.lng, "route", function(mrkr){
-				alert("mrkr " + mrkr.getLatLng().lat);
+			var marker = map.addMarker(latlng.lat, latlng.lng, "route", function(mrkr){
+				selectRule(marker._bbm);
 			});
-			mrkr._id_sel = route_rule_selected._id;
+			marker._bbm = route_rule_selected;
+			storeRule();
+			selectRule(marker._bbm);
 		});
+
+		function selectRule(bbm){
+			route_rule_selected = bbm;
+			rule = route_rule_selected.attributes;
+			$("#drive_rule_speed").val(rule.speed_limit);
+			$("#drive_rule_comment").val(rule.comment);
+			$("#drive_rule_stop").prop('checked', rule.full_stop);			
+			var p = new L.LatLng(rule.latitude, rule.longitude);
+			if(!window.route_rule_selected_circle){ window.route_rule_selected_circle = new L.CircleMarker(p); window.route_rule_selected_circle.setRadius(200); }
+			window.route_rule_selected_circle.setLatLng(p);
+		}
 		
+		function storeRule(){
+			if (!route_rule_selected){ alert("No rule selected"); return; }
+			var range = 1;
+			route_rule_selected.save({"range": range, "speed_limit":$("#drive_rule_speed").val(), "comment":$("#drive_rule_comment").val(), "full_stop": $("#drive_rule_stop").is(':checked')});
+		}
+		
+		function saveRule(){
+			storeRule();
+			alert("Saved with current values");
+		}
+
 	</script>  
 	
 </html>
