@@ -51,7 +51,10 @@ function Map(){
 	};
 	
 	this.clearLayer = function(layer_name){
-		if(this.layers[layer_name]){this.layers[layer_name].clearLayers();}
+		if(this.layers[layer_name]){
+			this.layers[layer_name].clearLayers();
+			this.layers[layer_name]._latlngs = undefined;
+		}
 	};
 	
 	
