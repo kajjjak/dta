@@ -31,21 +31,20 @@
      
       function howGreen(speed, gear, rpm, acceleration_pedal){
       	//http://www.epa.gov/otaq/models/ngm/420p05001.pdf
+      	window.green = window.green || {};
 				var gears = {"first":1, "second":2, "third":3, "fourth":4, "fifth":5, "sixth":6, "seventh":7, "eighth":8, "reverse":1, "neutral":0};
-				var gears_efficency = {0:1, 1:0.722, 2:0.809, 3:0.87, 4:0.87, 5:0.87, 6:0.87, 7:0.87, 8:0.87}; // based on Bishop & Kluger, 1996
-				var gear_efficiency = gears_efficency[gears[gear]];
-				var rpm_efficiency = 0.5;
-				var overal_efficiency = (gear_efficiency+rpm_efficiency)/2.0;
-				window.green = window.green || {};
+				var gears_efficency = {0:0.87, 1:0.722, 2:0.809, 3:0.87, 4:0.87, 5:0.87, 6:0.87, 7:0.87, 8:0.87}; // based on Bishop & Kluger, 1996
+				window.green.gear_efficiency = gears_efficency[gears[gear]] + 13; //scale upp to 1
+				window.green.rpm_efficiency = window.green.gear_efficiency;
+				window.green.overal_efficiency = (window.green.gear_efficiency+window.green.rpm_efficiency)/2.0;
+				
 				if (acceleration_pedal){
-					if ((acceleration_pedal < green.acceleration_pedal) && (speed > green.speed)){
-						overal_efficiency = 1;	
+					if ((acceleration_pedal < window.green.acceleration_pedal) && (speed > window.green.speed)){
+						window.green.overal_efficiency = 1;	
 					}				
 				}
 				green.acceleration_pedal = acceleration_pedal;
 				green.speed = speed;
-				//if (giving in and increasing speed then good because using hill)
-				//rpm is also an independent efficiency factor
       }
       
     </script>	
