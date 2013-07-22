@@ -103,7 +103,6 @@ function Map(){
 		for (indx in mrkrs){
 			var mrkr = mrkrs[indx];
 			var dist = map._getDistanceBetween(latlng, mrkr.getLatLng());
-			console.info("Distance ("+dist+") between me and " + mrkr._bbm.id);
 			if (dist < range){
 				within_range_callback(this.layers[layer_name]._markers[indx]);
 			}
