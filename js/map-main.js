@@ -53,6 +53,7 @@ function Map(){
 		var b = new L.LatLng(pnew[0], pnew[1]);
 		this.addLineByLatLng([a,b], layer_name, options);
 		this.layers[layer_name]._latlngs.push(latlng);
+		return b;
 	};	
 
 	this.addLineByLatLng = function(latlngs, layer_name, options){
@@ -102,7 +103,7 @@ function Map(){
 		for (indx in mrkrs){
 			var mrkr = mrkrs[indx];
 			var dist = map._getDistanceBetween(latlng, mrkr.getLatLng());
-			console.info("Distance ("+dist+") between me and " + mrkr.attraction_descr);
+			// console.info("Distance ("+dist+") between me and " + mrkr.attraction_descr);
 			if (dist < range){
 				within_range_callback(mrkr);
 			}
