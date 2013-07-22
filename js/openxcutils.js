@@ -29,7 +29,7 @@ function OpenXCReader(){
 	};
 	
 	this.flush = function(){
-		console.info("saving " + JSON.stringify(this.buffer));
+		//console.info("saving " + JSON.stringify(this.buffer));
 		var m = window.vehicle_readings.create(this.buffer);
 		this.buffer = {};
 		return m;
