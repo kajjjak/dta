@@ -50,6 +50,10 @@ function Map(){
 		pl.addTo(this.layers[layer_name]);
 	};
 	
+	this.clearLayer = function(layer_name){
+		if(this.layers[layer_name]){this.layers[layer_name].clearLayers();}
+	};
+	
 	
 }
 var map = new Map();
