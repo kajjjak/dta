@@ -36,6 +36,8 @@ function Map(){
 			click_fn(mrkr);
 		});
 		mrkr.addTo(this.layers[layer_name]);
+		if(!this.layers[layer_name]._markers){this.layers[layer_name]._markers = [];}
+		this.layers[layer_name]._markers.push(mrkr);
 		return mrkr;
 	};
 
@@ -81,5 +83,31 @@ function Map(){
 			this.map.off('click', undefined);			
 		}
 	};
+	
+
+	this._getDistanceBetween = function(latlng1, latlng2){
+		var lat1 = latlng1.lat;
+		var lon1 = latlng1.lng;
+		var lat2 = latlng2.lat;
+		var lon2 = latlng2.lng;
+		var R = 6371; // km
+		var d = Math.acos(Math.sin(lat1)*Math.sin(lat2) + 
+		                  Math.cos(lat1)*Math.cos(lat2) *
+		                  Math.cos(lon2-lon1)) * R;
+		return d; 
+	}
+	
+	this.getNearbyMarkers = function(latlng, layer_name, range, within_range_callback){
+		var mrkrs = this.layers[layer_name]._markers;
+		for (indx in mrkrs){
+			var mrkr = mrkrs[indx];
+			var dist = map._getDistanceBetween(latlng, mrkr.getLatLng());
+			console.info("Distance ("+dist+") between me and " + mrkr.attraction_descr);
+			if (dist < range){
+				within_range_callback(mrkr);
+			}
+		}
+	}
+	
 }
 var map = new Map();
