@@ -74,9 +74,9 @@
 		  		</div>
 		  		<div id="vehicle_simulation_step"></div>
 			  	<div class="vehicle_data">
-<canvas id="chart_div" width="100" height="100">
-This text is displayed if your browser does not support HTML5 Canvas.
-</canvas>		
+						<canvas id="vehicle_speed" width="100" height="100">Your browser does not support HTML5 Canvas.</canvas>		
+						<canvas id="engine_speed" width="100" height="100">Your browser does not support HTML5 Canvas.</canvas>		
+						<canvas id="accelerator_pedal_position" width="100" height="100">Your browser does not support HTML5 Canvas.</canvas>		
 						<div id="vehicle_speed"></div>
 						<div id="vehicle_green"></div>
 						<div id="torque_at_transmission"></div>
@@ -111,32 +111,44 @@ This text is displayed if your browser does not support HTML5 Canvas.
 	
 	<script type='text/javascript' src='/vendor/gauge.js'></script>
 	<script type='text/javascript'>
-
-			var opts = {
-			  lines: 12, // The number of lines to draw
-			  angle: 0.15, // The length of each line
-			  lineWidth: 0.44, // The line thickness
-			  pointer: {
-			    length: 0.9, // The radius of the inner circle
-			    strokeWidth: 0.035, // The rotation offset
-			    color: '#000000' // Fill color
-			  },
-			  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
 			
-			  colorStart: '#6FADCF',   // Colors
-			  colorStop: '#8FC0DA',    // just experiment with them
-			  strokeColor: '#E0E0E0',   // to see which ones work best for you
-			  generateGradient: true
-			};
-			var target = document.getElementById('chart_div'); // your canvas element
-			var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-			gauge.maxValue = 3000; // set max gauge value
-			gauge.animationSpeed = 32; // set animation speed (32 is default value)
-			gauge.set(575); // set actual value
-
+			function createGauge(name, max){
+				window.vehicle_gauges = window.vehicle_gauges || {};
+				var opts = {
+				  lines: 12, // The number of lines to draw
+				  angle: 0.15, // The length of each line
+				  lineWidth: 0.44, // The line thickness
+				  pointer: {
+				    length: 0.9, // The radius of the inner circle
+				    strokeWidth: 0.035, // The rotation offset
+				    color: '#000000' // Fill color
+				  },
+				  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+				
+				  colorStart: '#6FADCF',   // Colors
+				  colorStop: '#8FC0DA',    // just experiment with them
+				  strokeColor: '#E0E0E0',   // to see which ones work best for you
+				  generateGradient: true
+				};
+				var gauge = new Gauge(document.getElementById(name)).setOptions(opts); // create sexy gauge!
+				gauge.maxValue = max; // set max gauge value
+				gauge.animationSpeed = 32; // set animation speed (32 is default value)
+				gauge.set(gauge.maxValue*0.1); // set actual value
+				vehicle_gauges[name] = gauge;
+			}
+			
+			createGauge("vehicle_speed", 180);
+			createGauge("engine_speed", 16382/2);
+			
+			gauge_delay_update = 10000;
       function drawGauge(speed, rpm, fuel){
       	//drawChartCall(undefined, speed, rpm, fuel);
-      	gauge.set(rpm);
+      	gauge_delay_update = gauge_delay_update + 1;
+      	if (gauge_delay_update > 100){
+      		if((speed !== undefined) && (speed >= 0)){vehicle_gauges["vehicle_speed"].set(speed);}
+      		if((rpm !== undefined) && (rpm >= 0)){vehicle_gauges["engine_speed"].set(rpm);}
+      		gauge_delay_update = 0;
+      	}
       }
       
       function runDriverSimulation(){
