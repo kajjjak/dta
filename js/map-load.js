@@ -33,15 +33,18 @@ function addDriversPath(m){
 function stopDriversPathSimulation(){
 	if(window.vehicle_simulation_id){clearInterval(vehicle_simulation_id);}
 	window.vehicle_simulation_id = undefined;
+	window.vehicle_simulation_data = [];
 }
 
 function runDriversPathSimulation(vehicle_data_collection){
 	stopDriversPathSimulation();
 	vehicle_simulation_data = vehicle_data_test_1;
 	vehicle_simulation_index = 0;
+	vehicle_simulation_length = vehicle_simulation_data.length;
 	map.clearLayer("driver_path");
 	carReader.onDataRead = function(d){
 		drawGauge(100*(d.vehicle_speed/200),100*(d.engine_speed/200),d.fuel_level );
+		$("#vehicle_simulation_step").html("step: " + vehicle_simulation_index + " (" + parseInt(vehicle_simulation_index/vehicle_simulation_length) + " %)");
 		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
 		$("#engine_speed").html("engine_speed: " + d.engine_speed);
 		$("#torque_at_transmission").html("torque_at_transmission: " + d.torque_at_transmission);
