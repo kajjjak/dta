@@ -86,11 +86,12 @@
 	
 		map.createMap("map", [42.291595, -83.237617], 16, 18);
 		map.clickMap(function(latlng){
-			var _latlng = latlng;
-			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.4});
-			map.addMarker(latlng.lat, latlng.lng, "route", function(){
-				alert("mrkr lckc");
+			route_rule_selected = vehicle_readings.create({"route": true, "latitude":latlng.lat, "longitude": latlng.lng});
+			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.35});
+			mrkr = map.addMarker(latlng.lat, latlng.lng, "route", function(mrkr){
+				alert("mrkr " + mrkr.getLatLng().lat);
 			});
+			mrkr._id_sel = route_rule_selected._id;
 		});
 		
 	</script>  
