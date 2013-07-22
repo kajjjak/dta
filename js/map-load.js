@@ -26,11 +26,20 @@ function addDriversPath(m){
 	var lat = m.attributes.latitude[0];
 	var lng = m.attributes.longitude[0];
 	var opacity = speed/80;
-	console.info("color " + 255*(speed/80));
-	map.appendLineToPosition(lat, lng, "myredline", {"color": "blue", "opacity": opacity});	
+	//console.info("color " + 255*(speed/80));
+	map.appendLineToPosition(lat, lng, "driver_path", {"color": "blue", "opacity": opacity});	
 }
 
-function runDriversPathSimulation(){
+function stopDriversPathSimulation(){
+	if(window.vehicle_simulation_id){clearInterval(vehicle_simulation_id);}
+	window.vehicle_simulation_id = undefined;
+}
+
+function runDriversPathSimulation(vehicle_data_collection){
+	stopDriversPathSimulation();
+	vehicle_simulation_data = vehicle_data_test_1;
+	vehicle_simulation_index = 0;
+	map.clearLayer("driver_path");
 	carReader.onDataRead = function(d){
 		drawGauge(100*(d.vehicle_speed/200),100*(d.engine_speed/200),d.fuel_level );
 		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
@@ -48,13 +57,11 @@ function runDriversPathSimulation(){
 		$("#fine_odometer_since_restart").html("fine_odometer_since_restart: " + d.fine_odometer_since_restart);
 		$("#accelerator_pedal_position").html("accelerator_pedal_position: " + d.accelerator_pedal_position);
 	};
-	
-	vehicle_index = 0;
-	setInterval(function(){
-		if (vehicle_data.length > vehicle_index){
-			var d = vehicle_data[vehicle_index];
+	vehicle_simulation_id = setInterval(function(){ //TODO: use requestAnimationFrame
+		if (vehicle_simulation_data.length > vehicle_simulation_index){
+			var d = vehicle_simulation_data[vehicle_simulation_index];
 			var m = carReader.readLine(d);
-			vehicle_index = vehicle_index + 1;
+			vehicle_simulation_index = vehicle_simulation_index + 1;
 			if (m){
 				addDriversPath(m);
 			}
