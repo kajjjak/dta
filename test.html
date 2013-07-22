@@ -27,28 +27,27 @@
 	<script src="/js/map-load.js"></script>
 	<script src="/js/openxcutils.js"></script>	
 	
-	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 	<script type='text/javascript'>
-      google.load('visualization', '1', {packages:['gauge']});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['Memory', 80],
-          ['CPU', 55],
-          ['Network', 68]
-        ]);
-
-        var options = {
-          width: 400, height: 120,
-          redFrom: 90, redTo: 100,
-          yellowFrom:75, yellowTo: 90,
-          minorTicks: 5
-        };
-
-        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-        chart.draw(data, options);
+     
+      function howGreen(speed, gear, rpm, acceleration_pedal){
+      	//http://www.epa.gov/otaq/models/ngm/420p05001.pdf
+				var gears = {"first":1, "second":2, "third":3, "fourth":4, "fifth":5, "sixth":6, "seventh":7, "eighth":8, "reverse":1, "neutral":0};
+				var gears_efficency = {0:1, 1:0.722, 2:0.809, 3:0.87, 4:0.87, 5:0.87, 6:0.87, 7:0.87, 8:0.87}; // based on Bishop & Kluger, 1996
+				var gear_efficiency = gears_efficency[gears[gear]];
+				var rpm_efficiency = 0.5;
+				var overal_efficiency = (gear_efficiency+rpm_efficiency)/2.0;
+				window.green = window.green || {};
+				if (acceleration_pedal){
+					if ((acceleration_pedal < green.acceleration_pedal) && (speed > green.speed)){
+						overal_efficiency = 1;	
+					}				
+				}
+				green.acceleration_pedal = acceleration_pedal;
+				green.speed = speed;
+				//if (giving in and increasing speed then good because using hill)
+				//rpm is also an independent efficiency factor
       }
+      
     </script>	
 </head>
 <body>
