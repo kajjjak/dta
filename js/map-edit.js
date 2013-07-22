@@ -20,7 +20,14 @@ function saveRule(){
 	alert("Saved with current values");
 }
 
-function clearRoute(){
+function removeRule(){
+	route_rule_selected.destroy();
+	route_rule_selected = undefined;
+	map.clearLayer("route");
+	setTimeout(function(){showRoute();}, 500);
+}
+
+function destroyRoute(){
 	var route = vehicle_readings.where({route: true});
 	for (var i in route){
 		route[i].destroy();
