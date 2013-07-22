@@ -36,17 +36,39 @@ function stopDriversPathSimulation(){
 	window.vehicle_simulation_data = [];
 }
 
+
+function howGreen(d){
+	//http://www.epa.gov/otaq/models/ngm/420p05001.pdf
+	window.vehicle_data_read = window.vehicle_data_read || {};
+	var gears = {"first":1, "second":2, "third":3, "fourth":4, "fifth":5, "sixth":6, "seventh":7, "eighth":8, "reverse":1, "neutral":0};
+	var gears_efficency = {0:0.87, 1:0.722, 2:0.809, 3:0.87, 4:0.87, 5:0.87, 6:0.87, 7:0.87, 8:0.87}; // based on Bishop & Kluger, 1996
+	var gear_efficiency = gears_efficency[gears[d.transmission_gear_position]] + 13; //scale upp to 1
+	var rpm_efficiency = vehicle_data_read.gear_efficiency;
+	var overal_efficiency = (gear_efficiency+rpm_efficiency)/2.0;
+	
+	if (d.accelerator_pedal_position){
+		if ((accelerator_pedal_position < vehicle_data_read.accelerator_pedal_position) && (d.vehicle_speed > vehicle_data_read.vehicle_speed)){
+			overal_efficiency = 1;	
+		}				
+	}
+	vehicle_data_read = d;
+	return overal_efficiency;
+}
+
+
 function runDriversPathSimulation(vehicle_data_collection){
 	stopDriversPathSimulation();
 	vehicle_simulation_data = vehicle_data_test_1;
 	vehicle_simulation_index = 0;
 	vehicle_simulation_length = vehicle_simulation_data.length;
 	map.clearLayer("driver_path");
+	
 	carReader.onDataRead = function(d){
 		drawGauge(100*(d.vehicle_speed/200),100*(d.engine_speed/200),d.fuel_level );
-		$("#vehicle_simulation_step").html("step: " + vehicle_simulation_index + " (" + parseInt(vehicle_simulation_index/vehicle_simulation_length) + " %)");
+		$("#vehicle_simulation_step").html("Step: " + vehicle_simulation_index + " (" + (parseInt(1000*vehicle_simulation_index/vehicle_simulation_length))/1000 + " %)");
 		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
-		$("#engine_speed").html("engine_speed: " + d.engine_speed);
+		$("#vehicle_green").html("vehicle_green: " + howGreen(d));
+		/*
 		$("#torque_at_transmission").html("torque_at_transmission: " + d.torque_at_transmission);
 		$("#parking_brake_status").html("parking_brake_status: " + d.parking_brake_status);
 		$("#transmission_gear_position").html("transmission_gear_position: " + d.transmission_gear_position);
@@ -59,6 +81,7 @@ function runDriversPathSimulation(vehicle_data_collection){
 		$("#brake_pedal_status").html("brake_pedal_status: " + d.brake_pedal_status);
 		$("#fine_odometer_since_restart").html("fine_odometer_since_restart: " + d.fine_odometer_since_restart);
 		$("#accelerator_pedal_position").html("accelerator_pedal_position: " + d.accelerator_pedal_position);
+		*/
 	};
 	vehicle_simulation_id = setInterval(function(){ //TODO: use requestAnimationFrame
 		if (vehicle_simulation_data.length > vehicle_simulation_index){
