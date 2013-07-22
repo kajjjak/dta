@@ -32,8 +32,11 @@ function Map(){
 		var m = map.getMap();
 		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(m);}
 		var mrkr = L.marker([latitude, longitude]);
-		mrkr.on('click', click_fn);
+		mrkr.on('click', function(){
+			click_fn(mrkr);
+		});
 		mrkr.addTo(this.layers[layer_name]);
+		return mrkr;
 	};
 
 
