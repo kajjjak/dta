@@ -92,7 +92,7 @@ function runDriversPathSimulation(vehicle_data_collection){
 			if (m){
 				var p = addDriversPath(m);
 				map.getNearbyMarkers(p, "route", 1, function(m){
-					console.info("Detected it " + JSON.stringify(m));
+					console.info("Detected it " + m._bbm.id);
 				});
 			}
 		}
