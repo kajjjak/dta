@@ -57,6 +57,15 @@ function Map(){
 		}
 	};
 	
-	
+	this.clickMap = function(callback){
+		this.click_map = callback;
+		if (callback){
+			this.map.on('click', function(e) {
+		  	  map.click_map(e.latlng);
+			});
+		} else {
+			this.map.off('click', undefined);			
+		}
+	};
 }
 var map = new Map();
