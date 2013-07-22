@@ -28,7 +28,7 @@ function addDriversPath(m){
 	var lng = m.attributes.longitude[0];
 	var opacity = green_factor;//speed/80;
 	//console.info("color " + 255*(speed/80));
-	map.appendLineToPosition(lat, lng, "driver_path", {"color": "darkgreen", "opacity": opacity});	
+	return map.appendLineToPosition(lat, lng, "driver_path", {"color": "darkgreen", "opacity": opacity});	
 }
 
 function stopDriversPathSimulation(){
@@ -55,7 +55,6 @@ function howGreen(d){
 	vehicle_data_read = d;
 	return overal_efficiency;
 }
-
 
 function runDriversPathSimulation(vehicle_data_collection){
 	stopDriversPathSimulation();
@@ -91,7 +90,10 @@ function runDriversPathSimulation(vehicle_data_collection){
 			var m = carReader.readLine(d);
 			vehicle_simulation_index = vehicle_simulation_index + 1;
 			if (m){
-				addDriversPath(m);
+				var p = addDriversPath(m);
+				map.getNearbyMarkers(p, "route", 1, function(m){
+					console.info("Detected it " + m.id);
+				});
 			}
 		}
 	}, 10);
