@@ -20,6 +20,7 @@ function showDriversPath(){
 		addDriversPath(m);
 	});
 }
+
 green_factor = 1;
 function addDriversPath(m){
 	var speed = m.attributes.vehicle_speed[0];
