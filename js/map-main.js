@@ -5,6 +5,9 @@ function Map(){
     return arguments.callee._singletonInstance;
   arguments.callee._singletonInstance = this;
 
+	this.getMap = function(){
+		return this.map;
+	};
 
 	this.createMap = function(el, latlng, zoom, max_zoom){
 		this.map = L.map(el).setView(latlng, zoom || 13);
@@ -24,7 +27,15 @@ function Map(){
 		}
 		this.addLineByLatLng(latlng_array, layer_name, options);
 	};
-	
+		
+	this.addMarker = function(latitude, longitude, layer_name, click_fn){
+		var m = map.getMap();
+		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(m);}
+		var mrkr = L.marker([latitude, longitude]);
+		mrkr.on('click', click_fn);
+		mrkr.addTo(this.layers[layer_name]);
+	};
+
 
 	this.appendLineToPosition = function(latitude, longitude, layer_name, options){
 		var latlng = [latitude, longitude];
