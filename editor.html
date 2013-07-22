@@ -86,8 +86,11 @@
 	
 		map.createMap("map", [42.291595, -83.237617], 16, 18);
 		map.clickMap(function(latlng){
-			alert("lcick");
-			alert(latlng.lat);
+			var _latlng = latlng;
+			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.4});
+			map.addMarker(latlng.lat, latlng.lng, "route", function(){
+				alert("mrkr lckc");
+			});
 		});
 		
 	</script>  
