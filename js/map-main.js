@@ -45,7 +45,6 @@ function Map(){
 		return mrkr;
 	};
 
-
 	this.appendLineToPosition = function(latitude, longitude, layer_name, options){
 		var latlng = [latitude, longitude];
 		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);}
@@ -89,7 +88,6 @@ function Map(){
 		}
 	};
 	
-
 	this._getDistanceBetween = function(latlng1, latlng2){
 		var lat1 = latlng1.lat;
 		var lon1 = latlng1.lng;
