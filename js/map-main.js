@@ -103,6 +103,7 @@ function Map(){
 	}
 	
 	this.getNearbyMarkers = function(latlng, layer_name, range, within_range_callback){
+		if (!this.layers[layer_name]){ return []; }
 		if (!this.layers[layer_name]._markers){ return []; }
 		var mrkrs = this.layers[layer_name]._markers;
 		for (indx in mrkrs){
