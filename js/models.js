@@ -2,11 +2,10 @@
 
 $(function(){
   // Pouch.DEBUG = true;
-
-  Backbone.sync = BackbonePouch.sync({
+  Backbone.sync = function(){};/*BackbonePouch.sync({
     db: Pouch('vehicle_readings-backbone-0.0.12')
   });
-
+  */
   Backbone.Model.prototype.idAttribute = '_id';
 
   var VehicleReading = Backbone.Model.extend({
