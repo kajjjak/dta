@@ -84,20 +84,31 @@ function runDriversPathSimulation(vehicle_data_collection){
 		$("#accelerator_pedal_position").html("accelerator_pedal_position: " + d.accelerator_pedal_position);
 		*/
 	};
+
 	vehicle_simulation_id = setInterval(function(){ //TODO: use requestAnimationFrame
 		if (vehicle_simulation_data.length > vehicle_simulation_index){
 			var d = vehicle_simulation_data[vehicle_simulation_index];
-			var m = carReader.readLine(d);
 			vehicle_simulation_index = vehicle_simulation_index + 1;
-			if (m){
-				var p = addDriversPath(m);
-				map.getNearbyMarkers(p, "route", 1, function(rule){
-					var r = rule._bbm;
-					var vehicle_speed = m.get("vehicle_speed")[0];
-					var rule_speed = r.get("speed_limit");
-					console.info("Detected rule " + vehicle_speed + "  " + rule_speed);
-				});
-			}
+			readVehicleData(d);
 		}
 	}, 10);
+}
+
+function readVehicleData(d){
+	var m = carReader.readLine(d);
+	if (m){
+		var p = addDriversPath(m);
+		map.setCenter(p);
+		map.getNearbyMarkers(p, "route", 1, function(rule){
+			var r = rule._bbm;
+			var vehicle_speed = m.get("vehicle_speed")[0];
+			var rule_speed = r.get("speed_limit");
+			console.info("Detected rule " + vehicle_speed + "  " + rule_speed);
+		});
+	}	
+}
+
+function _c(ts, name, value){
+	if (ts === ""){ ts = new Date().getTime(); }
+	readVehicleData({"timestamp": ts, "name": name, "value": value});
 }
