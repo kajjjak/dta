@@ -8,6 +8,10 @@ function Map(){
 	this.getMap = function(){
 		return this.map;
 	};
+	
+	this.setCenter = function(latlng){
+		this.map.setView(latlng, this.map.getZoom());
+	};
 
 	this.createMap = function(el, latlng, zoom, max_zoom){
 		this.map = L.map(el).setView(latlng, zoom || 13);
@@ -99,6 +103,7 @@ function Map(){
 	}
 	
 	this.getNearbyMarkers = function(latlng, layer_name, range, within_range_callback){
+		if (!this.layers[layer_name]._markers){ return []; }
 		var mrkrs = this.layers[layer_name]._markers;
 		for (indx in mrkrs){
 			var mrkr = mrkrs[indx];
