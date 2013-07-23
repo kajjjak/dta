@@ -110,5 +110,20 @@ function readVehicleData(d){
 
 function _c(ts, name, value){
 	if (ts === ""){ ts = new Date().getTime(); }
-	readVehicleData({"timestamp": ts, "name": name, "value": value});
+	switch (name) {
+		case "ignition_status": break;
+		case "transmission_gear_position": break;
+		case "windshield_wiper_status": break;
+		case "headlamp_status":
+			if (value == "true"){value = true;} else {value = false;} break;
+		case "parking_brake_status":
+			if (value == "true"){value = true;} else {value = false;} break;
+		case "headlamp_status":
+			if (value == "true"){value = true;} else {value = false;} break;
+		case "high_beam_status":
+			if (value == "true"){value = true;} else {value = false;} break;
+		default:
+			value = parseFloat(value); break;
+	}
+	readVehicleData({timestamp: ts, name: name, value: value});
 }
