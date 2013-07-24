@@ -74,7 +74,17 @@
 					<form>
 					  <fieldset>
 					    <legend>Driving rule</legend>
-					    <label>Speed limit</label>
+					    <label>Route</label>
+					    <select id="route_name" onChange="showRoute()">
+					    	<option value="route a">Route A</option>
+					    	<option value="route b">Route B</option>
+					    	<option value="route c">Route C</option>
+					    	<option value="route d">Route D</option>
+					    	<option value="route e">Route E</option>
+					    	<option value="route f">Route F</option>
+					    	<option value="route g">Route G</option>
+					    </select>
+					    <label>Speed limit</label>					    
 					    <input id="drive_rule_speed" type="text" placeholder="Speed limit in km/h">
 					    <label class="checkbox">
 					      <input id="drive_rule_stop" type="checkbox"> Full stop
@@ -93,7 +103,7 @@
 		map.createMap("map", [42.291595, -83.237617], 16, 18);
 		map.clickMap(function(latlng){
 			var range = 1;
-			route_rule_selected = vehicle_readings.create({"timestamp":new Date().getTime(), "route": true, "latitude":latlng.lat, "longitude": latlng.lng, "range": range, "speed_limit":$("#drive_rule_speed").val(), "comment":$("#drive_rule_comment").val(), "full_stop": $("#drive_rule_stop").is(':checked')});
+			route_rule_selected = vehicle_readings.create({"route_name":$("#route_name").val(), "userid":localStorage.getItem("userid"), "timestamp":new Date().getTime(), "route": true, "latitude":latlng.lat, "longitude": latlng.lng, "range": range, "speed_limit":$("#drive_rule_speed").val(), "comment":$("#drive_rule_comment").val(), "full_stop": $("#drive_rule_stop").is(':checked')});
 			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.35});
 			var marker = map.addMarker(latlng.lat, latlng.lng, "route", function(mrkr){
 				selectRule(marker._bbm);
