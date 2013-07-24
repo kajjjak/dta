@@ -77,6 +77,13 @@ function Map(){
 		}
 	};
 	
+	this.removeLayer = function(layer_name){
+		if(this.layers[layer_name]){
+			this.layers[layer_name].clearLayers();
+			this.layers[layer_name]._latlngs = undefined;
+		}		
+	}
+	
 	this.clickMap = function(callback){
 		this.click_map = callback;
 		if (callback){
