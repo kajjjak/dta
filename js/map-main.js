@@ -34,7 +34,7 @@ function Map(){
 		
 	this.addMarker = function(latitude, longitude, layer_name, click_fn){
 		var m = map.getMap();
-		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(m);}
+		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(m); this.layers[layer_name]._lbound = new L.Bounds();}
 		var mrkr = L.marker([latitude, longitude]);
 		mrkr.on('click', function(){
 			click_fn(mrkr);
@@ -42,12 +42,13 @@ function Map(){
 		mrkr.addTo(this.layers[layer_name]);
 		if(!this.layers[layer_name]._markers){this.layers[layer_name]._markers = [];}
 		this.layers[layer_name]._markers.push(mrkr);
+		this.layers._lbound[layer_name].extend(mrkr.getLatLng());
 		return mrkr;
 	};
 
 	this.appendLineToPosition = function(latitude, longitude, layer_name, options){
 		var latlng = [latitude, longitude];
-		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);}
+		if(!this.layers[layer_name]){ this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map); this.layers[layer_name]._lbound = new L.Bounds(); }
 		if(!this.layers[layer_name]._latlngs){this.layers[layer_name]._latlngs = [latlng]; return;}
 		var l = this.layers[layer_name]._latlngs.length;
 		var pold = this.layers[layer_name]._latlngs[l - 1];
@@ -55,9 +56,10 @@ function Map(){
 		var a = new L.LatLng(pold[0], pold[1]);
 		var b = new L.LatLng(pnew[0], pnew[1]);
 		this.addLineByLatLng([a,b], layer_name, options);
-		this.layers[layer_name]._latlngs.push(latlng);
+		if (this.layers[layer_name]._latlngs){this.layers[layer_name]._latlngs.push(latlng);}
+		if (this.layers[layer_name]._lbound) {this.layers[layer_name]._lbound.extend(b);} 
 		return b;
-	};	
+	};	 
 
 	this.addLineByLatLng = function(latlngs, layer_name, options){
 		options = options || {};
@@ -65,7 +67,7 @@ function Map(){
 		options.opacity = options.opacity || 0.8;
 		options.weight = options.weight || 8;
 		options.smoothFactor = options.smoothFactor || 0.5;
-		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);}
+		if(!this.layers[layer_name]){this.layers[layer_name] = new L.LayerGroup(); this.layers[layer_name].addTo(this.map);  this.layers[layer_name]._lbound = new L.Bounds();}
 		var pl = L.polyline(latlngs, options)
 		pl.addTo(this.layers[layer_name]);
 	};
@@ -82,7 +84,11 @@ function Map(){
 			this.layers[layer_name].clearLayers();
 			this.layers[layer_name]._latlngs = undefined;
 		}		
-	}
+	};
+	
+	this.getLayerBounds = function(layer_name){
+		return this.layers[layer_name]._lbound;
+	};
 	
 	this.clickMap = function(callback){
 		this.click_map = callback;
