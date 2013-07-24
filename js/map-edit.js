@@ -44,6 +44,10 @@ function showRoute(){
 	}	
 }
 
+function reloadRoute(){
+	vehicle_readings.fetch({success:function(){ vehicle_readings.forEach(function(m){ addRule(m.get("latitude"), m.get("longitude"), m);}); }})
+}
+
 function addRule(latitude, longitude, bbm){
 	map.appendLineToPosition(latitude, longitude, "route", {"color": "darkblue", "opacity": 0.35});
 	var _bbm = bbm;
