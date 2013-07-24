@@ -44,7 +44,7 @@ function showRoute(name){
 		model = route[i];
 		addRule(model.get("latitude"), model.get("longitude"), model);
 	}
-	map.fitBounds(map.getLayerBounds("route"));
+	map.fitLayerBounds("route");
 } 
 
 function reloadRoute(){
