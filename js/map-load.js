@@ -68,6 +68,7 @@ function runDriversPathSimulation(vehicle_data_collection){
 	
 	carReader.onDataRead = function(d){
 		green_factor = howGreen(d);
+		/*
 		drawGauge(d.vehicle_speed,d.engine_speed,d.fuel_level);
 		$("#vehicle_simulation_step").html("Step: " + vehicle_simulation_index + " (" + (parseInt(1000*vehicle_simulation_index/vehicle_simulation_length))/10 + " %)");
 		$("#vehicle_speed").html("vehicle_speed: " + d.vehicle_speed);
@@ -78,7 +79,6 @@ function runDriversPathSimulation(vehicle_data_collection){
 		$("#high_beam_status").html("high_beam_status: " + d.high_beam_status);
 		$("#brake_pedal_status").html("brake_pedal_status: " + d.brake_pedal_status);
 		$("#parking_brake_status").html("parking_brake_status: " + d.parking_brake_status);
-		/*
 		$("#torque_at_transmission").html("torque_at_transmission: " + d.torque_at_transmission);
 		$("#transmission_gear_position").html("transmission_gear_position: " + d.transmission_gear_position);
 		$("#odometer").html("odometer: " + d.odometer);
