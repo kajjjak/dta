@@ -92,16 +92,17 @@
 	
 		map.createMap("map", [42.291595, -83.237617], 16, 18);
 		map.clickMap(function(latlng){
-			route_rule_selected = vehicle_readings.create({"route": true, "latitude":latlng.lat, "longitude": latlng.lng});
+			var range = 1;
+			route_rule_selected = vehicle_readings.create({"timestamp":new Date().getTime(), "route": true, "latitude":latlng.lat, "longitude": latlng.lng, "range": range, "speed_limit":$("#drive_rule_speed").val(), "comment":$("#drive_rule_comment").val(), "full_stop": $("#drive_rule_stop").is(':checked')});
 			map.appendLineToPosition(latlng.lat, latlng.lng, "route", {"color": "darkblue", "opacity": 0.35});
 			var marker = map.addMarker(latlng.lat, latlng.lng, "route", function(mrkr){
 				selectRule(marker._bbm);
-			});
-			marker._bbm = route_rule_selected;
-			storeRule();
+			}); 
+			marker._bbm = route_rule_selected; 
+			//storeRule();
 			selectRule(marker._bbm);
 		});
-
+/*
 		function selectRule(bbm){
 			route_rule_selected = bbm;
 			rule = route_rule_selected.attributes;
@@ -123,7 +124,7 @@
 			storeRule();
 			alert("Saved with current values");
 		}
-
+*/
 	</script>  
 	
 </html>
