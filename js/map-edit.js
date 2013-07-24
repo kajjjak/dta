@@ -24,23 +24,25 @@ function removeRule(){
 	route_rule_selected.destroy();
 	route_rule_selected = undefined;
 	map.clearLayer("route");
-	setTimeout(function(){showRoute();}, 500);
+	setTimeout(function(){showRoute($("#route_name").val());}, 500);
 }
 
-function destroyRoute(){
-	var route = vehicle_readings.where({route: true});
+function destroyRoute(name){
+	var route = vehicle_readings.where({route: true, route_name:name, userid:localStorage.getItem("userid")});
 	for (var i in route){
 		route[i].destroy();
 	}
+	
 }
 
-function showRoute(){
-	var route = vehicle_readings.where({route: true});
+function showRoute(name){
+	name = name || $("#route_name").val();
+	var route = vehicle_readings.where({route: true, route_name:name, userid:localStorage.getItem("userid")});
 	var model;
+	map.clearLayer("route");
 	for (var i in route){
 		model = route[i];
 		addRule(model.get("latitude"), model.get("longitude"), model);
-		
 	}	
 }
 
