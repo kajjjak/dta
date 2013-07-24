@@ -43,8 +43,9 @@ function showRoute(name){
 	for (var i in route){
 		model = route[i];
 		addRule(model.get("latitude"), model.get("longitude"), model);
-	}	
-}
+	}
+	map.fitBounds(map.getLayerBounds("route"));
+} 
 
 function reloadRoute(){
 	vehicle_readings.fetch({success:function(){ vehicle_readings.forEach(function(m){ addRule(m.get("latitude"), m.get("longitude"), m);}); }})
