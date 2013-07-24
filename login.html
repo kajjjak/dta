@@ -36,14 +36,9 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   <link rel="shortcut icon" href="../assets/ico/favicon.png">
-  <style>
-		#content {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    }
-  </style>
 	</head>
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <!--div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -59,15 +54,15 @@
               <li><a href="#install">Install</a></li>
               <li><a href="/editor.html">Route</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div> 
         </div>
       </div>
     </div>
-    
+    -->
     <div id="content" class="container">
 
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
+      <form class="form-signin" target="index.html">
+        <h2 class="form-signin-heading">Please sign in / Register</h2>
         <input id="username" type="text" class="input-block-level" placeholder="Email address">
         <input id="password" type="password" class="input-block-level" placeholder="Password">
 		    <label>Route</label>
@@ -91,10 +86,13 @@
     <script>
     	function loginUser(){ 
     		var username = $("#username").val();
-    		var password = $("#password").val();
+    		var password = $("#password").val(); 
+    		if (!username.length){ return false; }
+    		if (!password.length){ return false; }
     		localStorage.setItem("userid", hashCode(username+password));
     		localStorage.setItem("route_name", $("#route_name").val());
-    		setTimeout(function(){location.href="index.html"}, 500);
+    		return true;
+    		//setTimeout(function(){window.location.href="index.html"}, 500);
     	}
     </script>
   </body>
