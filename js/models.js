@@ -5,7 +5,6 @@ $(function(){
 	Backbone.couch_connector.config.ddoc_name = "preview";
 	Backbone.couch_connector.config.global_changes = false;	
   var VehicleReading = Backbone.Model.extend({
-  	url : "/rules",
     defaults: function() {
       return {
       };
@@ -22,6 +21,11 @@ $(function(){
 
   var VehicleReadingList = Backbone.Collection.extend({
     model: VehicleReading,
+  	url : "/rules",
+  	comparator : function(comment){
+      return comment.get("timestamp");
+    },
+    
   });
 
   window.vehicle_readings = new VehicleReadingList;
