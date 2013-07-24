@@ -1,17 +1,15 @@
 // http://find-a-driving-school.ca/top-tips-reducing-fuel-consumption/
 
 $(function(){
-  // Pouch.DEBUG = true;
-  Backbone.sync = function(){};/*BackbonePouch.sync({
-    db: Pouch('vehicle_readings-backbone-0.0.12')
-  });
-  */
-  Backbone.Model.prototype.idAttribute = '_id';
-
+	Backbone.couch_connector.config.db_name = "dta";
+	Backbone.couch_connector.config.ddoc_name = "preview";
+	Backbone.couch_connector.config.global_changes = false;	
   var VehicleReading = Backbone.Model.extend({
+  	url : "/rules",
     defaults: function() {
       return {
       };
+       
     },
     initialize: function() {
     },
@@ -24,19 +22,6 @@ $(function(){
 
   var VehicleReadingList = Backbone.Collection.extend({
     model: VehicleReading,
-
-    pouch: {
-      fetch: 'query',
-      options: {
-        query: {
-          fun: {
-            map: function(doc) {
-              emit(doc.order, null);
-            }
-          }
-        }
-      }
-    }
   });
 
   window.vehicle_readings = new VehicleReadingList;
