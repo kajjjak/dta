@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.css" />
 	<!--[if lte IE 8]>
 	   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.ie.css" />
-	<![endif]--> 
+	<![endif]-->  
 
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.3/leaflet.js"></script>
 	
@@ -79,7 +79,7 @@
         <label class="checkbox">
           <input id="register" type="checkbox" value="remember-me"> I am a new user
         </label>
-        <button onClick="loginUser()" class="btn btn-large btn-primary" type="submit">Sign in</button>
+        <button onClick="loginUser()" class="btn btn-large btn-primary" type="button">Sign in</button>
       </form>
 
     </div> <!-- /container -->    
@@ -91,8 +91,8 @@
     		if (!password.length){ return false; }
     		localStorage.setItem("userid", hashCode(username+password));
     		localStorage.setItem("route_name", $("#route_name").val());
+    		setTimeout(function(){window.location.href="index.html"}, 500);
     		return true;
-    		//setTimeout(function(){window.location.href="index.html"}, 500);
     	}
     </script>
   </body>
